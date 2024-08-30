@@ -49,6 +49,7 @@ from .preprocessing import RemapLabels
 from .preprocessing import RemoveLabels
 from .preprocessing import SequentialLabels
 from .preprocessing import KeepLargestComponent
+from .preprocessing import Lazy_Crop
 
 
 __all__ = [
@@ -105,4 +106,5 @@ __all__ = [
     'RemoveLabels',
     'SequentialLabels',
     'KeepLargestComponent',
+    'Lazy_Crop',
 ]

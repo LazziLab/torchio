@@ -14,6 +14,8 @@ from ..data.io import nib_to_sitk
 from ..data.io import sitk_to_nib
 from ..data.subject import Subject
 from ..typing import TypeData
+from ..data.lazy_image import Lazy_Image
+from ..data.lazy_subject import Lazy_Subject
 
 
 TypeTransformInput = Union[
@@ -46,6 +48,7 @@ class DataParser:
         self.is_nib = False
 
     def get_subject(self):
+        # added lazy_types to allowable subject inputs
         if isinstance(self.data, nib.Nifti1Image):
             tensor = self.data.get_fdata(dtype=np.float32)
             if tensor.ndim == 3:
@@ -65,6 +68,11 @@ class DataParser:
             subject = self._get_subject_from_image(self.data)
             self.is_image = True
         elif isinstance(self.data, Subject):
+            subject = self.data
+        elif isinstance(self.data, Lazy_Image):
+            subject = self._get_lazy_subject_from_image(self.data)
+            self.is_image = True
+        elif isinstance(self.data, Lazy_Subject):
             subject = self.data
         elif isinstance(self.data, sitk.Image):
             subject = self._get_subject_from_sitk_image(self.data)
@@ -86,9 +94,9 @@ class DataParser:
             self.is_dict = True
         else:
             raise ValueError(f'Input type not recognized: {type(self.data)}')
-        assert isinstance(subject, Subject)
+        assert (isinstance(subject, Subject) or isinstance(subject, Lazy_Subject))
         return subject
-
+    
     def get_output(self, transformed):
         if self.is_tensor or self.is_sitk:
             image = transformed[self.default_image_name]
@@ -128,7 +136,11 @@ class DataParser:
     def _get_subject_from_image(self, image: Image) -> Subject:
         subject = Subject({self.default_image_name: image})
         return subject
-
+        
+    def _get_lazy_subject_from_image(self, image: Image) -> Lazy_Subject:
+        subject = Lazy_Subject({self.default_image_name: image})
+        return subject
+    
     @staticmethod
     def _get_subject_from_dict(
         data: dict,

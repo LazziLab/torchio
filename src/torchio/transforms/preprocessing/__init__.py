@@ -17,6 +17,7 @@ from .spatial.pad import Pad
 from .spatial.resample import Resample
 from .spatial.resize import Resize
 from .spatial.to_canonical import ToCanonical
+from .spatial.lazy_crop import Lazy_Crop
 
 
 __all__ = [
@@ -39,4 +40,5 @@ __all__ = [
     'RemoveLabels',
     'SequentialLabels',
     'KeepLargestComponent',
+    'Lazy_Crop',
 ]

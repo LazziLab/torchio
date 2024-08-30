@@ -2,8 +2,8 @@
 
 __author__ = """Fernando Perez-Garcia"""
 __email__ = 'fepegar@gmail.com'
-__version__ = '0.19.9'
-
+__version__ = '0.19.10'
+# modified by Andres Morales for lazy operations
 
 from . import utils
 from .constants import *  # noqa: F401, F403
@@ -23,6 +23,15 @@ from .data import (
     LabelSampler,
     GridSampler,
     GridAggregator,
+    Lazy_SubjectsDataset,
+    Lazy_Image,
+    Lazy_ScalarImage,
+    Lazy_LabelMap,
+    Lazy_Subject,
+    Lazy_WeightedSampler,
+    Lazy_UniformSampler,
+    Lazy_LabelSampler,
+    Lazy_GridSampler,
 )
 from . import datasets
 from . import reference
@@ -46,4 +55,13 @@ __all__ = [
     'LabelSampler',
     'GridSampler',
     'GridAggregator',
+    'Lazy_SubjectsDataset',
+    'Lazy_Image',
+    'Lazy_ScalarImage',
+    'Lazy_LabelMap',
+    'Lazy_Subject',
+    'Lazy_WeightedSampler',
+    'Lazy_UniformSampler',
+    'Lazy_LabelSampler',
+    'Lazy_GridSampler',
 ]
